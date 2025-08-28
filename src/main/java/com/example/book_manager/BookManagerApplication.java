@@ -1,5 +1,6 @@
 package com.example.book_manager;
 
+import com.example.book_manager.annotation.EnableCustomFeature;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
@@ -11,6 +12,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  *  3. @ComponentScan：自动扫描当前包及子包组件
  */
 @SpringBootApplication
+@EnableCustomFeature  // 启用自定义功能
 public class BookManagerApplication {
     public static void main(String[] args) {
         SpringApplication.run(BookManagerApplication.class, args);
