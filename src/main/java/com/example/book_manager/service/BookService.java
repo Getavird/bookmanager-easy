@@ -4,8 +4,10 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 
+import com.example.book_manager.event.BookCreatedEvent;
 import com.example.book_manager.model.Book;
 import com.example.book_manager.repository.BookRepository;
 
@@ -21,13 +23,18 @@ public class BookService {
     @Autowired
     private BookRepository bookRepository;
 
+    @Autowired
+    private ApplicationEventPublisher eventPublisher;
+
     /**
      * 添加新书
      * @param book 图书对象
      * @return 保存后的图书对象（包含生成的ID）
      */
     public Book addBook(Book book) {
-        return bookRepository.save(book);
+        Book savedBook = bookRepository.save(book);
+        eventPublisher.publishEvent(new BookCreatedEvent(this, savedBook));
+        return savedBook;
     }
 
     /**
